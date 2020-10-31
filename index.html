@@ -43,6 +43,11 @@
                 min-width: 100px;
             }
 
+            span.rotated-90deg {
+                display: inline-block;
+                transform: rotate(90deg);
+            }
+
             .warning-message {
                 color: #a80;
             }
@@ -73,8 +78,9 @@
 
             <textarea id="text-box" placeholder="Paste list of YouTube URLs. Lines with other content will be ignored."></textarea>
             <div class="grouping">
-                <button id="copy-button">Copy Playlist</button
-                ><button id="open-button">Open Playlist</button>
+                <button id="paste-button" title="Add text from clipboard to text box." hidden>📋 Paste</button
+                ><button id="copy-button" title="Copy playlist URL with video IDs extracted from text box to clipboard.">✔️ Copy Playlist</button
+                ><button id="open-button" title="Open playlist URL with video IDs extracted from text box in new tab. YouTube will immediately redirect."><span class="rotated-90deg">🔺</span> Open Playlist</button>
             </div>
 
             <div id="unrecognized-urls-label" class="warning-message" hidden>There were unrecognized URLs.</div>
@@ -86,9 +92,34 @@
             void function main() {
                 document.title = document.getElementById("app-name").textContent;
 
+                const el = document.getElementById("paste-button")
+                if (navigator.clipboard.readText != undefined) {
+                    el.hidden = false;
+                    el.addEventListener("click", onPasteButtonClick);
+                }
+
                 document.getElementById("copy-button").addEventListener("click", onCopyButtonClick);
                 document.getElementById("open-button").addEventListener("click", onOpenButtonClick);
             }.call();
+
+
+            function onPasteButtonClick() {
+                navigator.clipboard.readText().then((text) => {
+                    if (text.length === 0) {
+                        return;
+                    }
+
+                    const el = document.getElementById("text-box");
+
+                    const oldText = el.value;
+                    el.value =
+                        oldText +
+                        (/\r?\n$|^$/.test(oldText) ? "" : "\n") +
+                        text;
+
+                    el.scrollTop = Number.MAX_SAFE_INTEGER;
+                });
+            }
 
 
             function onCopyButtonClick() {
