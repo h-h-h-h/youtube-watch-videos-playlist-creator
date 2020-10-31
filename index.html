@@ -84,7 +84,7 @@
             </div>
 
             <div id="unrecognized-urls-label" class="warning-message" hidden>There were unrecognized URLs.</div>
-            <div id="too-many-ids" class="warning-message" hidden>Found more than <span class="max-count"></span> video IDs. YouTube will probably truncate the list.</div>
+            <div id="too-many-ids-label" class="warning-message" hidden>Found more than <span class="max-count"></span> video IDs. YouTube will probably truncate the list.</div>
             <div id="no-ids-label" class="error-message" hidden>No video IDs could be extracted.</div>
         </div>
 
@@ -92,7 +92,7 @@
             void function main() {
                 document.title = document.getElementById("app-name").textContent;
 
-                const el = document.getElementById("paste-button")
+                const el = document.getElementById("paste-button");
                 if (navigator.clipboard.readText != undefined) {
                     el.hidden = false;
                     el.addEventListener("click", onPasteButtonClick);
@@ -149,7 +149,7 @@
 
                 const MAX_NUMBER_OF_VIDEO_IDS = 50;
                 const tooManyIDs = data.numberOfIDs > MAX_NUMBER_OF_VIDEO_IDS;
-                const el = document.getElementById("too-many-ids");
+                const el = document.getElementById("too-many-ids-label");
                 if (tooManyIDs) {
                     for (const subel of el.getElementsByClassName("max-count")) {
                         subel.textContent = MAX_NUMBER_OF_VIDEO_IDS;
@@ -205,8 +205,7 @@
                     if (success) {
                         success =
                             id != undefined &&
-                            id.length >= 11 &&
-                            id.length <= 12;  // Future-proofing. ¯\_(ツ)_/¯
+                            /^[a-zA-Z0-9_-]{11,12}$/.test(id);  // `12` -- Future-proofing. ¯\_(ツ)_/¯
                     }
 
                     if (! success) {
@@ -219,7 +218,7 @@
 
                 out.playlistURL =
                     (ids.length > 0)
-                        ? "http://www.youtube.com/watch_videos?video_ids=" + ids.join(",")
+                        ? "https://www.youtube.com/watch_videos?video_ids=" + ids.join(",")
                         : undefined;
 
                 out.numberOfIDs = ids.length;
