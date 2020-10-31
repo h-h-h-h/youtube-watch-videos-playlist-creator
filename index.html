@@ -57,6 +57,10 @@
                 align-items: center;
             }
 
+            a {
+                text-decoration: none;
+            }
+
             .warning-message {
                 color: #a80;
             }
@@ -85,7 +89,9 @@
         <div id="ui">
             <h1 id="app-name">YouTube <code>watch_videos</code> Playlist Creator</h1>
 
-            <textarea id="text-box" placeholder="Paste list of YouTube URLs. Lines with other content will be ignored."></textarea>
+            <p>This tool creates playlists from YouTube video URLs. It is recommended to use it together with a browser extension that copies tab URLs to clipboard. No data is sent anywhere; everything is happening locally. Read button tooltips for more information.</p>
+
+            <textarea id="text-box" placeholder="Paste list of YouTube video URLs. Lines with other content will be ignored."></textarea>
             <div class="grouping">
                 <button id="paste-button" title="Add text from clipboard to text box." hidden>📋 Paste</button
                 ><button id="copy-button" title="Copy playlist URL with video IDs extracted from text box to clipboard.">✔️ Copy Playlist</button
@@ -94,9 +100,9 @@
                 <div id="github-link">⭐&nbsp;<a href="https://github.com/h-h-h-h/youtube-watch-videos-playlist-creator">Star this app on GitHub.</a></div>
             </div>
 
-            <div id="unrecognized-urls-label" class="warning-message" hidden>There were unrecognized URLs.</div>
-            <div id="too-many-ids-label" class="warning-message" hidden>Found more than <span class="max-count"></span> video IDs. YouTube will probably truncate the list.</div>
-            <div id="no-ids-label" class="error-message" hidden>No video IDs could be extracted.</div>
+            <p id="unrecognized-urls-label" class="warning-message" hidden>There were unrecognized URLs.</p>
+            <p id="too-many-ids-label" class="warning-message" hidden>Found more than <span class="max-count"></span> video IDs. YouTube will probably truncate the list.</p>
+            <p id="no-ids-label" class="error-message" hidden>No video IDs could be extracted.</p>
         </div>
 
         <script>
