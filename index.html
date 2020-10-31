@@ -17,10 +17,12 @@
 
                 padding: 10px;
                 font-family: sans-serif;
+
+                --control-margin: 5px;
             }
 
-            #ui :not(code):not(span):not(.grouping) {
-                margin: 5px;
+            #ui :not(code):not(span):not(a):not(.grouping) {
+                margin: var(--control-margin);
             }
 
             h1 {
@@ -46,6 +48,13 @@
             span.rotated-90deg {
                 display: inline-block;
                 transform: rotate(90deg);
+            }
+
+            #github-link {
+                float: right;
+                height: calc(100% - 2 * var(--control-margin));
+                display: flex;
+                align-items: flex-end;
             }
 
             .warning-message {
@@ -81,6 +90,8 @@
                 <button id="paste-button" title="Add text from clipboard to text box." hidden>📋 Paste</button
                 ><button id="copy-button" title="Copy playlist URL with video IDs extracted from text box to clipboard.">✔️ Copy Playlist</button
                 ><button id="open-button" title="Open playlist URL with video IDs extracted from text box in new tab. YouTube will immediately redirect."><span class="rotated-90deg">🔺</span> Open Playlist</button>
+
+                <div id="github-link">⭐&nbsp;<a href="https://github.com/h-h-h-h/youtube-watch-videos-playlist-creator">Star this app on GitHub.</a></div>
             </div>
 
             <div id="unrecognized-urls-label" class="warning-message" hidden>There were unrecognized URLs.</div>
